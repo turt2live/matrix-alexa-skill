@@ -1,0 +1,28 @@
+{
+  "name": "matrix-alexa-skill",
+  "version": "0.0.1",
+  "description": "Ask Alexa to ask Matrix to do things",
+  "main": "lib/index.js",
+  "repository": "git@github.com:turt2live/matrix-alexa-skill.git",
+  "author": "Travis Ralston",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint --project ./tsconfig.json -t stylish",
+    "start:dev": "yarn build && node lib/index.js"
+  },
+  "dependencies": {
+    "ask-sdk": "^2.7.0",
+    "body-parser": "^1.19.0",
+    "config": "^3.2.4",
+    "express": "^4.17.1",
+    "js-yaml": "^3.13.1",
+    "matrix-bot-sdk": "^0.4.0",
+    "phoneticmatching": "^0.3.5"
+  },
+  "devDependencies": {
+    "@types/node": "^13.1.0",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.4"
+  }
+}
