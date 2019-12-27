@@ -1,4 +1,5 @@
 FROM node:alpine
+RUN apk add build-base && npm install -g yarn@latest
 COPY . /tmp/src
 RUN cd /tmp/src \
     && yarn install \
