@@ -1,5 +1,5 @@
-FROM node:alpine
-RUN apk add build-base && npm install -g yarn@latest
+# Need to use Node 10 on Debian so we can avoid building flite for PhoneticMatching
+FROM node:10-buster
 COPY . /tmp/src
 RUN cd /tmp/src \
     && yarn install \
