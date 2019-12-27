@@ -25,7 +25,10 @@ export async function getClientForUser(request: AlexaModel.RequestEnvelope): Pro
         const result = decipher.update(encrypted) + decipher.final('utf-8');
         const auth = JSON.parse(result);
 
-        const client = new MatrixClient(auth['homeserverUrl'], auth['accessToken']);
+        const userId = auth['userId'];
+        const userIdHash = crypto.createHash('md5').update(userId).digest('hex');
+        const storage = new SimpleFsStorageProvider(path.join(config.dataPath, userIdHash + ".json"));
+        const client = new MatrixClient(auth['homeserverUrl'], auth['accessToken'], storage);
         clientCache[alexaUserId] = client;
         return client;
     }
