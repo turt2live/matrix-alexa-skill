@@ -1,4 +1,15 @@
 # ----------------------------------------------------------------------------------------
+# These settings need to always be set, regardless as to what audience you have.
+
+# The directory the skill should store various bits of information in
+dataPath: "/data/storage"
+
+# Where the skill should listen for web requests. You'll have to configure this behind
+# an SSL-capable reverse proxy yourself. This skill expects to have its own subdomain.
+listenPort: 8080
+listenAddress: '0.0.0.0'
+
+# ----------------------------------------------------------------------------------------
 # If you're the only one using this skill, use the following options
 
 # Where the homeserver is located (client-server URL). This should point at
@@ -20,9 +31,6 @@ pantalaimon:
   # The password to login with. Can be removed after the bot has logged in once and
   # stored the access token.
   password: your_password
-
-# The directory the bot should store various bits of information in
-dataPath: "/data/storage"
 
 # ----------------------------------------------------------------------------------------
 # If you expect to actually publish the skill for others to use, use the following options.

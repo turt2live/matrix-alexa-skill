@@ -4,6 +4,7 @@ import * as bodyParser from "body-parser";
 import { LaunchIntent } from "./intents/LaunchIntent";
 import { SendMessageIntent } from "./intents/SendMessageIntent";
 import { LogLevel, LogService, RichConsoleLogger } from "matrix-bot-sdk";
+import config from "./config";
 
 LogService.setLogger(new RichConsoleLogger());
 LogService.setLevel(LogLevel.INFO);
@@ -21,4 +22,4 @@ app.post('/', (req, res) => {
         res.status(500).send('Error during the request');
     });
 });
-app.listen(8184, () => LogService.info("index", "Now listening for Alexa requests"));
+app.listen(config.listenPort, config.listenAddress, () => LogService.info("index", "Now listening for Alexa requests"));
