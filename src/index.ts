@@ -3,9 +3,10 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import { LaunchIntent } from "./intents/LaunchIntent";
 import { SendMessageIntent } from "./intents/SendMessageIntent";
-import { LogService, RichConsoleLogger } from "matrix-bot-sdk";
+import { LogLevel, LogService, RichConsoleLogger } from "matrix-bot-sdk";
 
 LogService.setLogger(new RichConsoleLogger());
+LogService.setLevel(LogLevel.INFO);
 
 const skill = Alexa.SkillBuilders.custom().addRequestHandlers(
     new LaunchIntent(),

@@ -14,10 +14,10 @@ export class SendMessageIntent implements Alexa.RequestHandler {
         const name = Alexa.getSlotValue(handlerInput.requestEnvelope, 'displayName');
         const message = Alexa.getSlotValue(handlerInput.requestEnvelope, 'message');
 
-        const client = await getClientForUser(handlerInput.requestEnvelope.session.user.userId);
+        const client = await getClientForUser(handlerInput.requestEnvelope);
         if (!client) {
             return handlerInput.responseBuilder
-                .speak("Sorry, it looks like I don't know who you are. Please start a conversation with me on Matrix and I'll get you set up.")
+                .speak("Please link your Matrix account before using this skill.")
                 .getResponse();
         }
 

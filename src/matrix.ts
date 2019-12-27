@@ -2,15 +2,32 @@ import { MatrixClient, MatrixProfile, PantalaimonClient, SimpleFsStorageProvider
 import config from "./config";
 import * as path from "path";
 import { EnPhoneticDistance, FuzzyMatcher } from "phoneticmatching";
+import * as AlexaModel from "ask-sdk-model";
+import * as crypto from "crypto";
 
 const clientCache: { [alexaUserId: string]: MatrixClient } = {};
 
-export async function getClientForUser(alexaUserId: string): Promise<MatrixClient> {
+export async function getClientForUser(request: AlexaModel.RequestEnvelope): Promise<MatrixClient> {
+    const alexaUserId = request.session.user.userId;
     if (clientCache[alexaUserId]) return clientCache[alexaUserId];
 
     if (config.hosted) {
-        // TODO: Support proper hosting
-        return null;
+        const authToken = request.session.user.accessToken;
+        if (!authToken) return null;
+
+        const buf = Buffer.from(authToken.substring("v1.".length), 'hex');
+        const iv = buf.slice(0, 16);
+        const salt = buf.slice(16, 80); // 64 bytes
+        const encrypted = buf.slice(80);
+
+        const cryptKey = crypto.pbkdf2Sync(`${config.clientId}|${config.clientSecret}`, salt, 100000, 32, 'sha512');
+        const decipher = crypto.createDecipheriv('aes-256-cbc', cryptKey, iv);
+        const result = decipher.update(encrypted) + decipher.final('utf-8');
+        const auth = JSON.parse(result);
+
+        const client = new MatrixClient(auth['homeserverUrl'], auth['accessToken']);
+        clientCache[alexaUserId] = client;
+        return client;
     }
 
     let client: MatrixClient;
@@ -42,7 +59,7 @@ export async function searchForRoom(client: MatrixClient, phoneticName: string):
             // No name yet - default to members
             const joined = await client.getRoomMembers(roomId, null, ['join', 'invite']);
             const withoutUs = joined.filter(e => e.membershipFor !== myUserId);
-            if (withoutUs.length > 1) continue; // too hard to name for now
+            if (withoutUs.length > 1 || withoutUs.length === 0) continue; // too hard to name for now
 
             const event = withoutUs[0];
             const profile = new MatrixProfile(event.membershipFor, event.content);

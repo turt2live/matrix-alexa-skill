@@ -1,5 +1,4 @@
 import * as config from "config";
-import { MatrixClient } from "matrix-bot-sdk";
 
 interface IConfig {
     homeserverUrl: string;
@@ -11,6 +10,8 @@ interface IConfig {
     };
     dataPath: string;
     hosted: boolean;
+    clientId: string;
+    clientSecret: string;
 }
 
 export default <IConfig>config;

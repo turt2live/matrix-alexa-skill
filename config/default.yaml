@@ -25,6 +25,32 @@ pantalaimon:
 dataPath: "/data/storage"
 
 # ----------------------------------------------------------------------------------------
-# If you expect to actually publish the skill for others to use, use the following options
-# Warning: These are significantly more advanced
-hosted: false # set to true if hosting for others
+# If you expect to actually publish the skill for others to use, use the following options.
+# Note: You'll need to ensure the dataPath above is set appropriately. It is used to store
+# information about various accounts using the skill.
+#
+# !! Warning: These options are significantly more advanced
+
+# Set this to true to disable single-user mode and instead host this for others.
+hosted: false
+
+# These are your client ID and secret from your OAuth system. In order to get credentials to
+# the user's Matrix account, account linking needs be enabled in the Alexa Skill. This skill
+# expects to be able to use matrix-oauth (https://github.com/turt2live/matrix-oauth) and as
+# such the skill itself needs to know the credentials for the client so it can decrypt the
+# access token.
+#
+# For account linking using matrix-oauth, be sure the settings match the right places:
+# * Account linking is Optional.
+# * Authorization URI points at /oauth/authorize for your matrix-oauth instance
+# * Token URI points at /oauth/token for your matrix-oauth instance
+# * Client ID and secret are the same as below, and in the matrix-oauth config
+# * Authorization scheme is 'credentials in request body'
+# * Scope is 'access_token'
+# * No domains or expiration
+# * Make sure your matrix-oauth config has the redirect URLs listed
+#
+# After all that, users will be able to link their Amazon Alexa account to their Matrix
+# account, which the skill will automatically see.
+clientId: your_client_id
+clientSecret: your_client_secret
