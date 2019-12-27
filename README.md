@@ -3,6 +3,8 @@ Ask Alexa to ask Matrix to do things
 
 > Alexa, ask Matrix to send a message to Jonathan
 
+Support room: [#alexa:t2bot.io](https://matrix.to/#/#alexa:t2bot.io)
+
 ## Using the hosted skill
 
 TODO: Deploy the t2bot.io skill for public use (needs privacy policy).
