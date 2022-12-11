@@ -15,7 +15,7 @@
     "ask-sdk": "^2.7.0",
     "body-parser": "^1.19.0",
     "config": "^3.2.4",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "js-yaml": "^3.13.1",
     "matrix-bot-sdk": "^0.4.0",
     "phoneticmatching": "^0.3.5"
